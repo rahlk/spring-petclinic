@@ -81,13 +81,5 @@ public class CallTraceTest {
 
 		// 10. Save the output. I had to mock this to be able to run.
 		mockedOwnerRepository.save(inst_414679530);
-
-
-
-
-
-
-
-
 	}
 }
