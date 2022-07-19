@@ -1,0 +1,160 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > OwnerRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.springframework.samples.petclinic.owner</a>
+</div>
+
+<h1>Coverage Summary for Class: OwnerRepository (org.springframework.samples.petclinic.owner)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">OwnerRepository$MockitoMock$4bR3zqkS</td>
+  </tr>
+  <tr>
+    <td class="name">OwnerRepository$MockitoMock$4bR3zqkS$auxiliary$uXrQ2Bnx</td>
+  </tr>
+  <tr>
+    <td class="name">OwnerRepository$MockitoMock$4bR3zqkS$auxiliary$yCGYenwt</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;/*
+<i class="no-highlight">2</i>&nbsp; * Copyright 2012-2019 the original author or authors.
+<i class="no-highlight">3</i>&nbsp; *
+<i class="no-highlight">4</i>&nbsp; * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+<i class="no-highlight">5</i>&nbsp; * you may not use this file except in compliance with the License.
+<i class="no-highlight">6</i>&nbsp; * You may obtain a copy of the License at
+<i class="no-highlight">7</i>&nbsp; *
+<i class="no-highlight">8</i>&nbsp; *      https://www.apache.org/licenses/LICENSE-2.0
+<i class="no-highlight">9</i>&nbsp; *
+<i class="no-highlight">10</i>&nbsp; * Unless required by applicable law or agreed to in writing, software
+<i class="no-highlight">11</i>&nbsp; * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+<i class="no-highlight">12</i>&nbsp; * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+<i class="no-highlight">13</i>&nbsp; * See the License for the specific language governing permissions and
+<i class="no-highlight">14</i>&nbsp; * limitations under the License.
+<i class="no-highlight">15</i>&nbsp; */
+<i class="no-highlight">16</i>&nbsp;package org.springframework.samples.petclinic.owner;
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;import java.util.List;
+<i class="no-highlight">19</i>&nbsp;
+<i class="no-highlight">20</i>&nbsp;import org.springframework.data.domain.Page;
+<i class="no-highlight">21</i>&nbsp;import org.springframework.data.domain.Pageable;
+<i class="no-highlight">22</i>&nbsp;import org.springframework.data.jpa.repository.Query;
+<i class="no-highlight">23</i>&nbsp;import org.springframework.data.repository.Repository;
+<i class="no-highlight">24</i>&nbsp;import org.springframework.data.repository.query.Param;
+<i class="no-highlight">25</i>&nbsp;import org.springframework.transaction.annotation.Transactional;
+<i class="no-highlight">26</i>&nbsp;
+<i class="no-highlight">27</i>&nbsp;/**
+<i class="no-highlight">28</i>&nbsp; * Repository class for &lt;code&gt;Owner&lt;/code&gt; domain objects All method names are compliant
+<i class="no-highlight">29</i>&nbsp; * with Spring Data naming conventions so this interface can easily be extended for Spring
+<i class="no-highlight">30</i>&nbsp; * Data. See:
+<i class="no-highlight">31</i>&nbsp; * https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-creation
+<i class="no-highlight">32</i>&nbsp; *
+<i class="no-highlight">33</i>&nbsp; * @author Ken Krebs
+<i class="no-highlight">34</i>&nbsp; * @author Juergen Hoeller
+<i class="no-highlight">35</i>&nbsp; * @author Sam Brannen
+<i class="no-highlight">36</i>&nbsp; * @author Michael Isvy
+<i class="no-highlight">37</i>&nbsp; */
+<i class="no-highlight">38</i>&nbsp;public interface OwnerRepository extends Repository&lt;Owner, Integer&gt; {
+<i class="no-highlight">39</i>&nbsp;
+<i class="no-highlight">40</i>&nbsp;	/**
+<i class="no-highlight">41</i>&nbsp;	 * Retrieve all {@link PetType}s from the data store.
+<i class="no-highlight">42</i>&nbsp;	 * @return a Collection of {@link PetType}s.
+<i class="no-highlight">43</i>&nbsp;	 */
+<i class="no-highlight">44</i>&nbsp;	@Query(&quot;SELECT ptype FROM PetType ptype ORDER BY ptype.name&quot;)
+<i class="no-highlight">45</i>&nbsp;	@Transactional(readOnly = true)
+<i class="no-highlight">46</i>&nbsp;	List&lt;PetType&gt; findPetTypes();
+<i class="no-highlight">47</i>&nbsp;
+<i class="no-highlight">48</i>&nbsp;	/**
+<i class="no-highlight">49</i>&nbsp;	 * Retrieve {@link Owner}s from the data store by last name, returning all owners
+<i class="no-highlight">50</i>&nbsp;	 * whose last name &lt;i&gt;starts&lt;/i&gt; with the given name.
+<i class="no-highlight">51</i>&nbsp;	 * @param lastName Value to search for
+<i class="no-highlight">52</i>&nbsp;	 * @return a Collection of matching {@link Owner}s (or an empty Collection if none
+<i class="no-highlight">53</i>&nbsp;	 * found)
+<i class="no-highlight">54</i>&nbsp;	 */
+<i class="no-highlight">55</i>&nbsp;
+<i class="no-highlight">56</i>&nbsp;	@Query(&quot;SELECT DISTINCT owner FROM Owner owner left join  owner.pets WHERE owner.lastName LIKE :lastName% &quot;)
+<i class="no-highlight">57</i>&nbsp;	@Transactional(readOnly = true)
+<i class="no-highlight">58</i>&nbsp;	Page&lt;Owner&gt; findByLastName(@Param(&quot;lastName&quot;) String lastName, Pageable pageable);
+<i class="no-highlight">59</i>&nbsp;
+<i class="no-highlight">60</i>&nbsp;	/**
+<i class="no-highlight">61</i>&nbsp;	 * Retrieve an {@link Owner} from the data store by id.
+<i class="no-highlight">62</i>&nbsp;	 * @param id the id to search for
+<i class="no-highlight">63</i>&nbsp;	 * @return the {@link Owner} if found
+<i class="no-highlight">64</i>&nbsp;	 */
+<i class="no-highlight">65</i>&nbsp;	@Query(&quot;SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id =:id&quot;)
+<i class="no-highlight">66</i>&nbsp;	@Transactional(readOnly = true)
+<i class="no-highlight">67</i>&nbsp;	Owner findById(@Param(&quot;id&quot;) Integer id);
+<i class="no-highlight">68</i>&nbsp;
+<i class="no-highlight">69</i>&nbsp;	/**
+<i class="no-highlight">70</i>&nbsp;	 * Save an {@link Owner} to the data store, either inserting or updating it.
+<i class="no-highlight">71</i>&nbsp;	 * @param owner the {@link Owner} to save
+<i class="no-highlight">72</i>&nbsp;	 */
+<i class="no-highlight">73</i>&nbsp;	void save(Owner owner);
+<i class="no-highlight">74</i>&nbsp;
+<i class="no-highlight">75</i>&nbsp;	/**
+<i class="no-highlight">76</i>&nbsp;	 * Returnes all the owners from data store
+<i class="no-highlight">77</i>&nbsp;	 **/
+<i class="no-highlight">78</i>&nbsp;	@Query(&quot;SELECT owner FROM Owner owner&quot;)
+<i class="no-highlight">79</i>&nbsp;	@Transactional(readOnly = true)
+<i class="no-highlight">80</i>&nbsp;	Page&lt;Owner&gt; findAll(Pageable pageable);
+<i class="no-highlight">81</i>&nbsp;
+<i class="no-highlight">82</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-07-19 07:39</div>
+</div>
+</body>
+</html>
